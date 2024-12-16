@@ -1,0 +1,8 @@
+1:lucas0921:cat:Ragdoll:1-2:male:yes:yes,yes:undefined:Lucas:haozexu0921@gmail.com:none
+2:lucas0921:cat:Ragdoll:2-4:male:yes:no,yes:undefined:Lucas:haozexu0921@gmail.com:1
+3:lucas0921:dog:Mix Breed:1-2:male:yes:no,yes:undefined:Lucas:haozexu0921@gmail.com:none
+4:lucas0921:dog:Mix Breed:1-2:male:yes:yes,yes:undefined:Lucas:haozexu0921@gmail.com:none
+5:lucas0921:dog:Mix Breed:1-2:female:no:no,no:undefined:Lucas:haozexu0921@gmail.com:none
+6:lucas0921:cat:Persian:1-2:male:yes:no,yes:undefined:Lucas:haozexu0921@gmail.com:
+7:lucas0921:cat:Persian:2-4:male:yes:yes,yes:undefined:Lucas:haozexu0921@gmail.com:
+8:lucas0921:cat:Mix Breed:2-4:male:yes:yes,no:undefined:Lucas:haozexu0921@gmail.com:none

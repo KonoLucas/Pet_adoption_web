@@ -1,0 +1,101 @@
+
+
+
+port http://soen287.encs.concordia.ca:5025
+You could go to this page to see the result
+
+
+Adopt A Dog/Cat Website
+Running Problem – Version 3
+This version requires HTML, CSS, JS and Node.js server. No XML is required.
+1) Create a template for your entire site such that you define the header and
+footer once and include them in each page of the site. This should be done
+using Node.js.
+The following is just as a reminder of what the header and footer should
+contain.
+• Header: It should include the name of your adoption service and a
+logo/picture. Clicking on the logo/picture should take you back to the
+home page. It should also display the current date and time. The
+Time should automatically refresh every second. (No change from
+Versions 1 & 2)
+• Footer: This should appear at the bottom of all your pages. Give it a
+distinct background color and include links to a Privacy/Disclaimer
+Statement which can either appear in the content area of the site or
+in an alert or confirm box. It should display a message promising
+users that their information will not be sold or misused, and protects
+the website builder from any incorrect information posted by a pet
+owner. No change from Version 1).
+2) You will manage 3 text files which will reside on the server.
+a. A login file which will contain username and passwords. This file will
+be consulted when a user is logging in to register an animal for
+adoption or will be written to when a new user registers. Each field
+should be separated by colon (:) and each user info is in one line.
+For example if I have a file with 3 accounts, the file will look like so:
+user1:pass1
+user2:pass2
+user3:pass3
+b. An available pet information file that will store the information
+entered by a user when they registered their pet. Details of the
+information to include in the file and the format are given in the
+description of Have a pet to give away in section 3 below
+3) Functionality of your site: Following is a review of each of the entries in
+your menu with an explanation of the expected behavior some of which
+already exists from versions 1 and 2 of this running problem and some
+which are additions to this last version.
+• Home: no changes from version 1
+• Browse Available Pets: is being removed for version 3. We are
+combining it with the Find a cat/dog menu entry.
+• Find a cat/dog: The form for this option was already created in Version
+1, and validated in version 2. When the user presses the Submit button,
+all records of animals that match the criteria in this form are displayed
+for the potential pet owner to peruse through.
+• Dog care: no changes from version 1
+• Cat care: no changes from version 1
+• Create an account: This is a new menu entry in Version 3. When a
+user clicks on this menu option, a login creation page loads into the
+content area with text fields for a username and one for a password as
+well as a description of the allowed formats for usernames and
+passwords. A username can contain letters (both upper and lower
+case) and digits only. A password must be at least 4 characters long
+(characters are to be letters and digits only), have at least one letter
+and at least one digit. Before sending this information to the server
+make sure that the entered username and password satisfy the format
+criteria just listed. As usernames are unique, you need to make sure
+that there isn’t already such a user name in use. If the requested
+username already exists, the server sends back a message requesting
+a new username/password pair informing the user that this username is
+not available. If the username is not already in use, then write this new
+pair to the login file following the format specified in bullet 2 a and
+return a message to the content area confirming that the account was
+successfully created and that they are now ready to login whenever
+they are ready.
+• Have a pet to give away: Before a user can create an entry for a new
+pet on the site they must first log in. Here is the behavior of this option:
+o When a user clicks on this menu option, they will first be asked to
+login. The client side needs to make sure that the format of both
+the username and password entered satisfy the criteria listed
+under the bullet Create an account above.
+o When the user clicks the Submit button, the server will check by
+reading the login file that this login pair exists. If it is a registered
+login/password pair a new session is started and the form, which
+was already created in version 1, is loaded into the content area.
+If the pair does not exist, a message is send back to the browser
+saying that the login failed. A user can try as many times as they
+want to login.
+o Once they have successfully logged in, they are ready to fill out
+the form and submit it.
+o Once a form is submitted, the information is added to the
+available pet information file. The 1st entry in the file for each pet
+must be an integer, which acts as a counter and a unique id for
+that entry as well as the username of the pet owner, followed by
+the information from the form. Each entry should be delimited by
+a colon (:) and each pet record should be in one line. For
+example if there are 3 pets available for adoption the file would
+look as follows
+1:user1: cat:persian:0.5:male: ………
+2:user2:dog:5:female: ……
+3:user2:dog:10.5:male:……
+where ….. Represents the rest of the information
+• LogOut: This option terminates a user’s session. The server should
+return and display a confirmation message.
+• Contact us: no change from version 1
