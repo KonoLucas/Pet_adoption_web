@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adopt A Cat/Dog</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="q7.js"></script>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <img src="logo.png" alt="Adopt A Cat/Dog Logo" id="logo" >
+        </a>
+        <h1>Pet house</h1>
+        <h5>Pet adoption service</h5>
+        <p id="timer" style="text-align: left;"> </p>
+        <p id="loginInfo" style="text-align: left;"> </p>
+        <script>
+            time(); setInterval(time, 1000); 
+            checkLoginStatusAndUpdateInfo(); setInterval(time, 1000);
+    
+        </script>
+    </header>
+
+    <nav id="side-menu">
+        <ul>
+            <li><a href="/home.html"><strong>Home page</strong></a></li>
+            <li><a href="/find_a_pet"  style="background-color: #e09f49; color: white; border-radius: 10px;"><strong>Find a dog/cat</strong></a></li>
+            <li><a href="/pet_giveaway" onclick="checkLoginAndRedirect(event)"><strong>Have a pet to give away</strong></a></li>
+            <li><a href="/dog_care"><strong>Dog care</strong></a></li>
+            <li><a href="/cat_care"><strong>Cat care</strong></a></li>
+            <li><a href="/contact"><strong>Contact us</strong></a></li>
+            <li><a href = "/login"><strong>Login</strong></a></li>
+            <li><a href="/logout" id="logoutButton"><strong>Logout</strong></a></li>
+            <li><a href="/createAccount" ><strong>Create Account</strong></a></li>
+        </ul>
+    </nav>
+
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default anchor action
+        if (confirm('Are you sure you want to logout?')) {
+            window.location.href = this.href; // If confirmed, proceed with the logout
+        }
+        });
+
+        function checkLoginAndRedirect(event) {
+        var cookies = document.cookie.split('; ');
+        var isLoggedIn = cookies.find(row => row.startsWith('isLoggedIn='));
+        isLoggedIn = isLoggedIn && isLoggedIn.split('=')[1] === 'true';
+
+        if (!isLoggedIn) {
+            // if not logged in
+            event.preventDefault(); 
+            alert('Please Log in first');
+            window.location.href = './login'; 
+        } 
+        else{window.location.href = './find_cat_or_dog';}
+    }
+    </script>
+
+    <main id="content">
+        <main id="content" >
+            <h1>Find a Dog/Cat</h1>
+            <form id="find-pet-form" action="/find_cat_or_dog" method="post">
+                <label >Pet type:</label>
+                <label> 
+                    <input type = "radio" name="pet_type" value="cat" >
+                    Cat
+                </label>
+                <label> 
+                    <input type = "radio" name="pet_type" value="dog" >
+                    Dog
+                </label> 
+            <br>
+                
+                <label for="breed">Breed:</label>
+                <select id="breed" name="breed">
+                    <option value="" disabled selected>Select breed</option>
+                    <option value="Ragdoll">mix breed</option>
+                    <option value="Ragdoll">Ragdoll</option>
+                    <option value="Persian">Persian</option>
+                    <option value="British Shorthair">British Shorthair</option>
+                    <option value="any">Doesn't matter</option>
+                </select><br>
+                
+                <label for="age">Preferred age:</label>
+                <select id="age" name="age">
+                    <option value="" disabled selected>Select age</option>
+                    <option value="1-2">1-2</option>
+                    <option value="2-4">2-4</option>
+                    <option value="5-20">5-20</option>
+                    <option value="any">Doesn't matter</option>
+                </select><br>
+                
+                <label for="gender">Preferred gender:</label>
+                <select id="gender" name="gender">
+                    <option value="" disabled selected>Select gender</option>
+                    <option value="any">Doesn't matter</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select><br>
+    
+                <fieldset>
+                    <legend>Select Your Preferences:</legend>
+                    
+                    <label for="other-dogs">
+                        <input type="checkbox" id="other-dogs" name="preferences" value="other dogs">
+                        Other dogs
+                    </label><br>
+                    
+                    <label for="other-cats">
+                        <input type="checkbox" id="other-cats" name="preferences" value="other cats">
+                        Other cats
+                    </label><br>
+                    
+                    <label for="small-children">
+                        <input type="checkbox" id="small-children" name="preferences" value="small children">
+                        Small children
+                    </label><br>
+                    
+                </fieldset>
+    
+                <button type="submit" id ="submit" value="Submit">Submit</button>
+                <button type="reset" value="Clear">Reset</button>
+    
+            </form>
+            <p id="errorMessage" style="color: red;"></p>
+
+            <br>
+            <div id="search-results"></div>
+    
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    document.getElementById("find-pet-form").addEventListener("submit", function(event) {
+                        let isValid = true;
+                        let errorMessage = "";
+                        
+                        // Check if pet type is selected
+                        const petType = document.getElementById("pet-type");
+                        if(petType.value === "") {
+                            isValid = false;
+                            errorMessage += "Please select a pet type.\n";
+                        }
+                        
+                        // Check if breed is selected
+                        const breed = document.getElementById("breed");
+                        if(breed.value === "") {
+                            isValid = false;
+                            errorMessage += "Please select a breed.\n";
+                        }
+                        
+                        // Check if age is selected
+                        const age = document.getElementById("age");
+                        if(age.value === "") {
+                            isValid = false;
+                            errorMessage += "Please select an age range.\n";
+                        }
+                        
+                        // Check if gender is selected
+                        const gender = document.getElementById("gender");
+                        if(gender.value === "") {
+                            isValid = false;
+                            errorMessage += "Please select a gender.\n";
+                        }
+    
+                        const checkboxes = document.querySelectorAll('#find-pet-form input[type="checkbox"]');
+                        const checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+    
+                        if (!checkedOne) {
+                            isValid = false;
+                            errorMessage += "Please select at least one preference.\n"; // Corrected this line
+                        }
+                        
+                        // If any of the validations failed, prevent form submission and display error message
+                        if (!isValid) {
+                            document.getElementById("errorMessage").textContent = errorMessage;
+                            event.preventDefault(); // Prevent form from submitting
+                        } else {
+                            // If everything is valid, clear any error messages
+                            document.getElementById("errorMessage").textContent = "";
+                            alert("Success submit the form.");
+                        }
+                    });
+                });
+
+                document.getElementById('find-pet-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    var formData = new FormData(this);
+    
+    fetch('/find_cat_or_dog', {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(pets => {
+        const resultsContainer = document.getElementById('search-results');
+        resultsContainer.innerHTML = ''; // Clear previous results
+
+        // Create a container for each pet
+        pets.forEach(petStr => {
+            const pet = petStr.split(':');
+            const petContainer = document.createElement('div');
+            petContainer.className = 'pet-container';
+
+            // Structure the display of the pet information
+            const petHtml = `
+                <div class="pet">
+                    <h3>${pet[2]} - ${pet[3]}</h3> <!-- Pet Type - Breed -->
+                    <p>Age Group: ${pet[4]}</p>
+                    <p>Gender: ${pet[5]}</p>
+                    <p>Suitable for small children: ${pet[6]}</p>
+                    <p>Gets along with other dogs: ${pet[7].split(',')[0]}</p>
+                    <p>Gets along with other cats: ${pet[7].split(',')[1]}</p>
+                    <p>Additional Info: ${pet[10]}</p>
+                </div>
+            `;
+            
+            petContainer.innerHTML = petHtml;
+            resultsContainer.appendChild(petContainer);
+        });
+            })
+            .catch(error => console.error('Error:', error));
+        });
+        </script>
+    </main>
+    
+    <footer>
+        <p>© Adopt A Cat/Dog. All rights reserved.</p>
+        <a href="privacy.html">Privacy/Disclaimer Statement</a>
+    </footer>
+
+
+
+           
+    </script>
+</body>
+</html>

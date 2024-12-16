@@ -1,0 +1,102 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#logo {height: 150px; width: 150px; position: absolute; top: -30px;}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: bisque;
+    line-height: 1.0;
+}
+
+div.feature {
+    background-color: #f4f4f4; /* A light background for feature sections */
+    padding: 20px;
+    margin-bottom: 10px; /* Spacing between feature boxes */
+    border-radius: 5px; /* Optional: Adds rounded corners */
+}
+
+/* Header Styles */
+header {
+    background-color: #e09f49;
+    color: white;
+    padding: 10px 20px;
+}
+
+header a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header img {
+    width: 50px; /* Adjust as needed */
+    margin-right: 10px;
+}
+
+/* Side Menu Styles */
+#side-menu {
+    background-color: bisque;
+    padding: 20px;
+    position: fixed; /* Keep menu visible */
+    width: 200px; /* Set the width of the side menu */
+    height: 100%; /* Full-height side menu */
+    border: 3px solid;
+    border-color: #e09f49;
+}
+
+#side-menu ul {
+    list-style-type: none;
+}
+
+#side-menu a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    padding: 8px;
+    transition: background-color 0.3s;
+}
+
+#side-menu a:hover {
+    background-color: #ddd;
+}
+
+/* Main Content Styles */
+#content {
+    margin-left: 220px; /* Make room for the side menu */
+    padding: 20px;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #e58d19;
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+.feature {
+    background-color: #eee;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+section {
+    padding: 20px 40px;
+}
+/* Add responsive design as needed */

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adopt A Cat/Dog</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="q7.js"></script>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <img src="logo.png" alt="Adopt A Cat/Dog Logo" id="logo" >
+        </a>
+        <h1>Pet house</h1>
+        <h5>Pet adoption service</h5>
+        <p id="timer" style="text-align: left;"> </p>
+        <p id="loginInfo" style="text-align: left;"> </p>
+        <script>
+            time(); setInterval(time, 1000); 
+            checkLoginStatusAndUpdateInfo(); setInterval(time, 1000);
+    
+        </script>
+    </header>
+
+    <nav id="side-menu">
+        <ul>
+            <li><a href="/home.html"><strong>Home page</strong></a></li>
+            <li><a href="/find_a_pet"><strong>Find a dog/cat</strong></a></li>
+            <li><a href="/pet_giveaway" style="background-color: #e09f49; color: white; border-radius: 10px;"><strong>Have a pet to give away</strong></a></li>
+            <li><a href="/dog_care"><strong>Dog care</strong></a></li>
+            <li><a href="/cat_care"><strong>Cat care</strong></a></li>
+            <li><a href="/contact"><strong>Contact us</strong></a></li>
+            <li><a href = "/login"><strong>Login</strong></a></li>
+            <li><a href="/logout" id="logoutButton"><strong>Logout</strong></a></li>
+            <li><a href="/createAccount" ><strong>Create Account</strong></a></li>
+        </ul>
+    </nav>
+    
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default anchor action
+        if (confirm('Are you sure you want to logout?')) {
+            window.location.href = this.href; // If confirmed, proceed with the logout
+        }
+        });
+
+        function checkLoginAndRedirect(event) {
+        var cookies = document.cookie.split('; ');
+        var isLoggedIn = cookies.find(row => row.startsWith('isLoggedIn='));
+        isLoggedIn = isLoggedIn && isLoggedIn.split('=')[1] === 'true';
+
+        if (!isLoggedIn) {
+            // if not logged in
+            event.preventDefault(); 
+            alert('Please Log in first');
+            window.location.href = './login'; 
+        } 
+        else{window.location.href = './find_cat_or_dog';}
+    }
+    </script>
+
+    <main id="content">
+        <h1>Have a pet to give away</h1>
+        
+        <form id="give-pet-form" action="/pet_giveaway" method="post">
+            <label for="breed">Cat or Dog:</label>
+            <label >Pet type:</label>
+                <label> 
+                    <input type = "radio" name="pet_type" value="cat" >
+                    Cat
+                </label>
+                <label> 
+                    <input type = "radio" name="pet_type" value="dog" >
+                    Dog
+                </label> 
+            <br>
+            
+            <label for="breed">Breed:</label>
+            <select id="breed" name="breed">
+                <option value="" disabled selected>Select breed</option>
+                <option value="Mix Breed">mix breed</option>
+                <option value="Ragdoll">Ragdoll</option>
+                <option value="Persian">Persian</option>
+                <option value="British Shorthair">British Shorthair</option>
+            </select><br>
+            
+            <label for="age"> Age:</label>
+            <select id="age" name="age">
+                <option value="" disabled selected>Select age</option>
+                <option value="1-2">1-2</option>
+                <option value="2-4">2-4</option>
+                <option value="5-20">5-20</option>
+            </select><br>
+            
+            <label for="gender"> Gender:</label>
+            <select id="gender" name="gender">
+                <option value="" disabled selected>Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select><br>
+
+            <label for="suitable_for_family">Suitable for a family with small children:</label>
+            <select id="suitable_for_family" name="suitable_for_family">
+                <option value="" disabled selected>Please Select </option>
+                <option value="yes">yes</option>
+                <option value="no">no</option>
+            </select><br>
+
+            <label for="along_with_dogs">Gets along with other dogs:</label>
+            <select id="along_with_dogs" name="along_with_dogs">
+                <option value="" disabled selected>Please Select </option>
+                <option value="yes">yes</option>
+                <option value="no">no</option>
+            </select><br>
+
+            <label for="along_with_cats">Gets along with other cats:</label>
+            <select id="along_with_cats" name="along_with_dogs">
+                <option value="" disabled selected>Please Select </option>
+                <option value="yes">yes</option>
+                <option value="no">no</option>
+            </select><br>
+            
+            <label for="owner_name">Owner's Name:</label>
+            <input type="text" id="owner_name" name="owner_name"><br>
+            
+            <label for="owner_email">Owner's Email:</label>
+            <input type="email" id="owner_email" name="owner_email"><br>
+            
+            <textarea id="comments" name="comments" placeholder="Tell us more about the pet..."></textarea><br>
+            
+            <button type="submit" id ="submit" value="Submit">Submit</button>
+            <button type="reset" value="Clear">Reset</button>
+        </form>
+
+        <p id="errorMessage" style="color: red;"></p>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("give-pet-form").addEventListener("submit", function(event) {
+                    let isValid = true;
+                    let errorMessage = "";
+            
+                    const petType = document.getElementById("pet-type");
+                    const breed = document.getElementById("breed");
+                    const age = document.getElementById("age");
+                    const gender = document.getElementById("gender");
+                    const suitableForFamily = document.getElementById("suitable_for_family");
+                    const alongWithDogs = document.getElementById("along_with_dogs");
+                    const alongWithCats = document.getElementById("along_with_cats");
+                    const ownerName = document.getElementById("owner_name");
+                    const ownerEmail = document.getElementById("owner_email");
+                    
+                    if (petType.value === "") {
+                        errorMessage += "Please select a pet type.\n";
+                        isValid = false;
+                    }
+                    if (breed.value === "") {
+                        errorMessage += "Please select a breed.\n";
+                        isValid = false;
+                    }
+                    
+                    if (age.value === "") {
+                        errorMessage += "Please select a age.\n";
+                        isValid = false;
+                    }
+
+                    if (gender.value === "") {
+                        errorMessage += "Please select a gender.\n";
+                        isValid = false;
+                    }
+
+                    if (suitableForFamily.value === "") {
+                        errorMessage += "Please select suitable For Family.\n";
+                        isValid = false;
+                    }
+
+                    if (alongWithDogs.value === "") {
+                        errorMessage += "Please select along With Dogs.\n";
+                        isValid = false;
+                    }
+
+                    if (alongWithCats.value === "") {
+                        errorMessage += "Please select along With Cats.\n";
+                        isValid = false;
+                    }
+            
+            
+                    if (ownerName.value.trim() === "") {
+                        errorMessage += "Please enter the owner's name.\n";
+                        isValid = false;
+                    }
+                    if (ownerEmail.value.trim() === "") {
+                        errorMessage += "Please enter the owner's email.\n";
+                        isValid = false;
+                    }
+                    // Check for a valid email format
+                    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailPattern.test(ownerEmail.value)) {
+                        errorMessage += "Please enter a valid email address.\n";
+                        isValid = false;
+                    }
+            
+                    if (!isValid) {
+                        document.getElementById("errorMessage").textContent = errorMessage;
+                        event.preventDefault(); // Prevent form from submitting
+                    } else {
+                        document.getElementById("errorMessage").textContent = "";
+                        // Form is valid. You can proceed with form submission or other actions.
+                        // For demonstration, here we're just showing a success message.
+                        alert("Form submitted successfully.");
+                    }
+                });
+            });
+            </script>
+
+
+
+    </main>
+    <footer>
+        <p>© Adopt A Cat/Dog. All rights reserved.</p>
+        <a href="privacy.html">Privacy/Disclaimer Statement</a>
+    </footer>
+</body>
+</html>

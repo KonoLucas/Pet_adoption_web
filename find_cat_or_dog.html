@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adopt A Cat/Dog</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="q7.js"></script>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <img src="logo.png" alt="Adopt A Cat/Dog Logo" id="logo" >
+        </a>
+        <h1>Pet house</h1>
+        <h5>Pet adoption service</h5>
+        <p id="timer" style="text-align: left;"> </p>
+        <p id="loginInfo" style="text-align: left;"> </p>
+        <script>
+            time(); setInterval(time, 1000); 
+            checkLoginStatusAndUpdateInfo(); setInterval(time, 1000);
+    
+        </script>
+    </header>
+
+    <nav id="side-menu">
+        <ul>
+            <li><a href="/home.html"><strong>Home page</strong></a></li>
+            <li><a href="/find_a_pet"  style="background-color: #e09f49; color: white; border-radius: 10px;"><strong>Find a dog/cat</strong></a></li>
+            <li><a href="/pet_giveaway" onclick="checkLoginAndRedirect(event)"><strong>Have a pet to give away</strong></a></li>
+            <li><a href="/dog_care"><strong>Dog care</strong></a></li>
+            <li><a href="/cat_care"><strong>Cat care</strong></a></li>
+            <li><a href="/contact"><strong>Contact us</strong></a></li>
+            <li><a href = "/login"><strong>Login</strong></a></li>
+            <li><a href="/logout" id="logoutButton"><strong>Logout</strong></a></li>
+            <li><a href="/createAccount" ><strong>Create Account</strong></a></li>
+        </ul>
+    </nav>
+
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default anchor action
+        if (confirm('Are you sure you want to logout?')) {
+            window.location.href = this.href; // If confirmed, proceed with the logout
+        }
+        });
+
+        function checkLoginAndRedirect(event) {
+        var cookies = document.cookie.split('; ');
+        var isLoggedIn = cookies.find(row => row.startsWith('isLoggedIn='));
+        isLoggedIn = isLoggedIn && isLoggedIn.split('=')[1] === 'true';
+
+        if (!isLoggedIn) {
+            // if not logged in
+            event.preventDefault(); 
+            alert('Please Log in first');
+            window.location.href = './login'; 
+        } 
+        else{window.location.href = './find_cat_or_dog';}
+    }
+    </script>
+
+    <main id="content">
+        <main id="content" >
+            <h1>Find Your Perfect Pet</h1>
+            <form id="find-pet-form">
+                <label>Pet Type:(Select neither to search both )
+                    <input type="radio" name="pet_type" value="cat"> Cat
+                    <input type="radio" name="pet_type" value="dog"> Dog
+                </label><br>
+                
+                <label>Breed:
+                    <select name="breed">
+                        <option value="any">Any</option>
+                        <option value="Ragdoll">Ragdoll</option>
+                        <option value="Mix Breed">Mix Breed</option>
+                        <option value="Persian">Persian</option>
+                        <option value="British Shorthair">British Shorthair</option>
+                    </select>
+                </label><br>
+                
+                <label>Age:
+                    <select name="age">
+                        <option value="any">Any</option>
+                        <option value="1-2">1-2 years</option>
+                        <option value="2-4">2-4 years</option>
+                        <option value="5-20">5-20 years</option>
+                    </select>
+                </label><br>
+                
+                <label>Gender:
+                    <select name="gender">
+                        <option value="any">Any</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </label><br>
+                
+                <label for="other-dogs">
+                    <input type="checkbox" id="other-dogs" name="preferences[other_dogs]" value="yes" onchange="checkboxChanged('other-dogs')">
+                    Need gets along with other dogs
+                    <input type="hidden" id="other-dogs-hidden" name="preferences[other_dogs]" value="no">
+                </label><br>
+                
+                <label for="other-cats">
+                    <input type="checkbox" id="other-cats" name="preferences[other_cats]" value="yes" onchange="checkboxChanged('other-cats')">
+                    Need gets along with other cats
+                    <input type="hidden" id="other-cats-hidden" name="preferences[other_cats]" value="no">
+                </label><br>
+                
+                <label for="small-children">
+                    <input type="checkbox" id="small-children" name="preferences[small_children]" value="yes" onchange="checkboxChanged('small-children')">
+                    Need suitable for small children
+                    <input type="hidden" id="small-children-hidden" name="preferences[small_children]" value="no">
+                </label><br>
+                
+                <button type="submit">Find Pets</button>
+            </form>
+            <p id="errorMessage" style="color: red;"></p>
+
+            <h2>Results:</h2>
+            <div id="results"></div>
+    
+            
+            <p id="errorMessage" style="color: red;"></p>
+
+            <br>
+            <div id="search-results"></div>
+
+
+            <script>
+                function checkboxChanged(id) {
+                    var checkbox = document.getElementById(id);
+                    var hiddenInput = document.getElementById(id + '-hidden');
+                    if (checkbox.checked) {
+                        hiddenInput.disabled = true;
+                    } else {
+                        hiddenInput.disabled = false;
+                    }
+                }
+            </script>
+            
+    
+            <script>
+                
+
+                document.getElementById('find-pet-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+
+    fetch('/find_cat_or_dog', {
+        method: 'POST',
+        body: new URLSearchParams(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        const resultsContainer = document.getElementById('results');
+        resultsContainer.innerHTML = '';  
+        if (data.length > 0) {
+            data.forEach(pet => {
+                const petInfo = pet.split(':'); 
+                const petDiv = document.createElement('div');
+                petDiv.className = 'result-item';
+                petDiv.innerHTML = `<h3>${petInfo[2]} - ${petInfo[3]}</h3>` +
+                                   `<p>Age: ${petInfo[4]}</p>` +
+                                   `<p>Gender: ${petInfo[5]}</p>` +
+                                   `<p>Gets Along with Other Dogs: ${petInfo[7].split(',')[0]}</p>` +
+                                   `<p>Gets Along with Cats: ${petInfo[7].split(',')[1]}</p>` +
+                                   `<p>Suitable for Small Children: ${petInfo[6]}</p>`;
+                resultsContainer.appendChild(petDiv);
+            });
+        } else {
+            resultsContainer.innerHTML = '<p>No pets found matching your criteria.</p>';
+        }
+    })
+        .catch(error => {
+        resultsContainer.innerHTML = 'Error loading results.';
+        console.error('Error:', error);
+        });
+    });
+        </script>
+    </main>
+    
+    <footer>
+        <p>© Adopt A Cat/Dog. All rights reserved.</p>
+        <a href="privacy.html">Privacy/Disclaimer Statement</a>
+    </footer>
+
+
+
+           
+    </script>
+</body>
+</html>

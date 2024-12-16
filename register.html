@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cat care</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="q7.js"></script>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <img src="logo.png" alt="Adopt A Cat/Dog Logo" id="logo" >
+        </a>
+        <h1>Pet house</h1>
+        <h5>Pet adoption service</h5>
+        <p id="timer" style="text-align: left;"> </p>
+        <p id="loginInfo" style="text-align: left;"> </p>
+        <script>
+            time(); setInterval(time, 1000); 
+            checkLoginStatusAndUpdateInfo(); setInterval(time, 1000);
+    
+        </script>
+    </header>
+
+    <nav id="side-menu">
+        <ul>
+            <li><a href="/home.html"><strong>Home page</strong></a></li>
+            <li><a href="/find_a_pet" ><strong>Find a dog/cat</strong></a></li>
+            <li><a href="/pet_giveaway" onclick="checkLoginAndRedirect(event)"><strong>Have a pet to give away</strong></a></li>
+            <li><a href="/dog_care"><strong>Dog care</strong></a></li>
+            <li><a href="/cat_care"><strong>Cat care</strong></a></li>
+            <li><a href="/contact"><strong>Contact us</strong></a></li>
+            <li><a href = "/login"><strong>Login</strong></a></li>
+            <li><a href="/logout" id="logoutButton"><strong>Logout</strong></a></li>
+            <li><a href="/createAccount" style="background-color: #e09f49; color: white; border-radius: 10px;"><strong>Create Account</strong></a></li>
+        </ul>
+    </nav>
+
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default anchor action
+        if (confirm('Are you sure you want to logout?')) {
+            window.location.href = this.href; // If confirmed, proceed with the logout
+        }
+        });
+
+        function checkLoginAndRedirect(event) {
+        var cookies = document.cookie.split('; ');
+        var isLoggedIn = cookies.find(row => row.startsWith('isLoggedIn='));
+        isLoggedIn = isLoggedIn && isLoggedIn.split('=')[1] === 'true';
+
+        if (!isLoggedIn) {
+            // if not logged in
+            event.preventDefault(); 
+            alert('Please Log in first');
+            window.location.href = './login'; 
+        } 
+        else{window.location.href = './find_cat_or_dog';}
+    }
+    </script>
+
+    <main id="content">
+        <h2>Create Account</h2>
+        <form id="createAccountForm" action="/createAccount" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required pattern="[A-Za-z0-9]+" title="Letters and digits only">
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required pattern="(?=.*[A-Za-z])(?=.*\d).{4,}" title="At least one letter and one digit, minimum length 4">
+            <br>
+            <button type="submit">Create Account</button>
+        </form>
+        <div id="message" style="color: red;"></div>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('createAccountForm').addEventListener('input', function() {
+                    var username = document.getElementById('username').value;
+                    var password = document.getElementById('password').value;
+                    var message = '';
+
+                    if (!/^[A-Za-z0-9]+$/.test(username)) {
+                        message = "Username can contain letters and digits only.";
+                    } else if (!/(?=.*[A-Za-z])(?=.*\d).{4,}/.test(password)) {
+                        message = "Password must include at least one letter, one digit and be at least 4 characters long.";
+                    }
+
+                    document.getElementById('message').innerText = message;
+                });
+            });
+        </script>
+    </main>
+    <footer>
+        <p>© Adopt A Cat/Dog. All rights reserved.</p>
+        <a href="privacy.html">Privacy/Disclaimer Statement</a>
+    </footer>
+</body>
+</html>

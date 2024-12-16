@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dog care</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="q7.js"></script>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <img src="logo.png" alt="Adopt A Cat/Dog Logo" id="logo" >
+        </a>
+        <h1>Pet house</h1>
+        <h5>Pet adoption service</h5>
+        <p id="timer" style="text-align: left;"> </p>
+        <p id="loginInfo" style="text-align: left;"> </p>
+        <script>
+            time(); setInterval(time, 1000); 
+            checkLoginStatusAndUpdateInfo(); setInterval(time, 1000);
+    
+        </script>
+    </header>
+
+    <nav id="side-menu">
+        <ul>
+            <li><a href="/home.html"><strong>Home page</strong></a></li>
+            <li><a href="/find_a_pet" ><strong>Find a dog/cat</strong></a></li>
+            <li><a href="/pet_giveaway" onclick="checkLoginAndRedirect(event)"><strong>Have a pet to give away</strong></a></li>
+            <li><a href="/dog_care" style="background-color: #e09f49; color: white; border-radius: 10px;"><strong>Dog care</strong></a></li>
+            <li><a href="/cat_care"><strong>Cat care</strong></a></li>
+            <li><a href="/contact"><strong>Contact us</strong></a></li>
+            <li><a href = "/login"><strong>Login</strong></a></li>
+            <li><a href="/logout" id="logoutButton"><strong>Logout</strong></a></li>
+            <li><a href="/createAccount" ><strong>Create Account</strong></a></li>
+        </ul>
+    </nav>
+
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default anchor action
+        if (confirm('Are you sure you want to logout?')) {
+            window.location.href = this.href; // If confirmed, proceed with the logout
+        }
+        });
+
+        function checkLoginAndRedirect(event) {
+        var cookies = document.cookie.split('; ');
+        var isLoggedIn = cookies.find(row => row.startsWith('isLoggedIn='));
+        isLoggedIn = isLoggedIn && isLoggedIn.split('=')[1] === 'true';
+
+        if (!isLoggedIn) {
+            // if not logged in
+            event.preventDefault(); 
+            alert('Please Log in first');
+            window.location.href = './login'; 
+        } 
+        else{window.location.href = './find_cat_or_dog';}
+    }
+    </script>
+
+    <main id="content">
+        <h1>Dog care tips</h1>
+        <h3>Food which is poisonous to dogs</h3>
+        <p>
+            Here is a simple list of some foods which can be harmful to dogs. Level of poisoning and severity depends on each type of food, how much the dog consumes and whether or not the dog has any underlying health problems.
+            <br>
+            <strong>Chocolate</strong>
+            <br>
+            Probably one most commonly heard of, chocolate is very poisonous to dogs and should never be given, even in small quantities. It is important to store your chocolate out of reach from the dog, e.g. in a cupboard up high, so they can't be tempted to steal any.
+            
+            <br>
+            <strong>Fruit</strong>
+            <br>
+            Grapes, raisins, currants and sultanas are all poisonous to dogs, even the dried variety. Avocado is also poisonous as the persin which is found in its leaves, fruit and seed can cause vomiting and diarrhoea. 
+            <br>
+            <strong>Nuts</strong>
+            <br>
+            Macadamia nuts are poisonous to dogs they can affect the nervous system resulting in weakness and panting. 
+            <br>
+            <strong>Vegetables</strong><br>
+            Onions, garlic, leeks, shallots and chives all belong to the Allium family. They contain a substance which can damage red blood cells in dogs and can cause life-threatening anaemia.
+            <br>
+            <strong>Blue Cheese</strong><br>
+            The fungus found in blue cheeses such as stilton and roquefort can cause muscle tremors and seizures in dogs. 
+            <br>
+            <strong>Cooked Bones</strong><br>
+            Certain raw bones such as beef or lamb can be given to dogs. But cooked bones can splinter which can perforate a dog's intestine. Larger bones can cause blockages in the digestive system. 
+            <br>
+            <br>
+            Battersea Dogs Home also has a comprehensive list of food poisonous to dogs here.
+            
+            Safe foods:<br>
+            <br>A complete, purpose made dog food which has been developed by a reputable brand is the best way to feed your dog. 
+            
+            <br>If you want to add some interesting extras into your dog's diet, here are some safe foods:
+            
+        
+            </p>
+            <a href="https://iwct-uk.org/education/food-poisonous-to-dogs/"> Link for Dog food tips</a>
+    </main>
+    <footer>
+        <p>© Adopt A Cat/Dog. All rights reserved.</p>
+        <a href="privacy.html">Privacy/Disclaimer Statement</a>
+    </footer>
+</body>
+</html>

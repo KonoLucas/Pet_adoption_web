@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pet house-Pet adoption service </title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="q7.js"></script>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <img src="logo.png" alt="Adopt A Cat/Dog Logo" id="logo" >
+        </a>
+        <h1>Pet house</h1>
+        <h5>Pet adoption service</h5>
+        <p id="timer" style="text-align: left;"> </p>
+        <p id="loginInfo" style="text-align: left;"> </p>
+        <script>
+            time(); setInterval(time, 1000); 
+            checkLoginStatusAndUpdateInfo(); setInterval(time, 1000);
+    
+        </script>
+    </header>
+
+    <nav id="side-menu">
+        <ul>
+            <li><a href="/home.html" style="background-color: #e09f49; color: white; border-radius: 10px;"><strong>Home page</strong></a></li>
+            <li><a href="/find_a_pet" ><strong>Find a dog/cat</strong></a></li>
+            <li><a href="/pet_giveaway" onclick="checkLoginAndRedirect(event)"><strong>Have a pet to give away</strong></a></li>
+            <li><a href="/dog_care"><strong>Dog care</strong></a></li>
+            <li><a href="/cat_care"><strong>Cat care</strong></a></li>
+            <li><a href="/contact"><strong>Contact us</strong></a></li>
+            <li><a href = "./login"><strong>Login</strong></a></li>
+            <li><a href="./logout" id="logoutButton"><strong>Logout</strong></a></li>
+            <li><a href="/createAccount" ><strong>Create Account</strong></a></li>
+        </ul>
+    </nav>
+
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default anchor action
+        if (confirm('Are you sure you want to logout?')) {
+            window.location.href = this.href; // If confirmed, proceed with the logout
+        }
+        });
+
+        function checkLoginAndRedirect(event) {
+        var cookies = document.cookie.split('; ');
+        var isLoggedIn = cookies.find(row => row.startsWith('isLoggedIn='));
+        isLoggedIn = isLoggedIn && isLoggedIn.split('=')[1] === 'true';
+
+        if (!isLoggedIn) {
+            // if not logged in
+            event.preventDefault(); 
+            alert('Please Log in first');
+            window.location.href = './login'; 
+        } 
+        else{window.location.href = './find_cat_or_dog';}
+    }
+    </script>
+    
+
+
+    <main id="content">
+        
+        
+        <section id="about">
+            <h1>Welcome to Pet house!</h2>
+            <p>This is a website that helps people exchange pets. We can not only help you find the pet you want, but also help you find a new home for your pet.</p>
+        </section>
+        <section id="features">
+            
+            <h2>Why Choose us?</h2>
+            <div class="feature" style="background-color: bisque;">
+                <h3>Comprehensive Profiles</h3>
+                <p>Learn everything about your potential new pet, from their backstory to their favorite treats.</p>
+            </div>
+            <div class="feature" style="background-color: bisque;">
+                <h3>Expert Support</h3>
+                <p>Our team of pet experts is here to support you through the adoption process and beyond.</p>
+            </div>
+            <div class="feature" style="background-color: bisque;">
+                <h3>Community Driven</h3>
+                <p>Join a community of pet lovers. Share stories, tips, and find pet meetups near you.</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>© Pet house. All rights reserved.</p>
+        <a href="/privacy">Privacy/Disclaimer Statement</a>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cat care</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="q7.js"></script>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <img src="logo.png" alt="Adopt A Cat/Dog Logo" id="logo" >
+        </a>
+        <h1>Pet house</h1>
+        <h5>Pet adoption service</h5>
+        <p id="timer" style="text-align: left;"> </p>
+        <p id="loginInfo" style="text-align: left;"> </p>
+        <script>
+            time(); setInterval(time, 1000); 
+            checkLoginStatusAndUpdateInfo(); setInterval(time, 1000);
+    
+        </script>
+    </header>
+
+    <nav id="side-menu">
+        <ul>
+            <li><a href="/home.html"><strong>Home page</strong></a></li>
+            <li><a href="/find_a_pet" ><strong>Find a dog/cat</strong></a></li>
+            <li><a href="/pet_giveaway" onclick="checkLoginAndRedirect(event)"><strong>Have a pet to give away</strong></a></li>
+            <li><a href="/dog_care"><strong>Dog care</strong></a></li>
+            <li><a href="/cat_care" style="background-color: #e09f49; color: white; border-radius: 10px;"><strong>Cat care</strong></a></li>
+            <li><a href="/contact"><strong>Contact us</strong></a></li>
+            <li><a href = "/login"><strong>Login</strong></a></li>
+            <li><a href="/logout" id="logoutButton"><strong>Logout</strong></a></li>
+            <li><a href="/createAccount" ><strong>Create Account</strong></a></li>
+        </ul>
+    </nav>
+
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default anchor action
+        if (confirm('Are you sure you want to logout?')) {
+            window.location.href = this.href; // If confirmed, proceed with the logout
+        }
+        });
+
+        function checkLoginAndRedirect(event) {
+        var cookies = document.cookie.split('; ');
+        var isLoggedIn = cookies.find(row => row.startsWith('isLoggedIn='));
+        isLoggedIn = isLoggedIn && isLoggedIn.split('=')[1] === 'true';
+
+        if (!isLoggedIn) {
+            // if not logged in
+            event.preventDefault(); 
+            alert('Please Log in first');
+            window.location.href = './login'; 
+        } 
+        else{window.location.href = './find_cat_or_dog';}
+    }
+    </script>
+
+    <main id="content">
+        <article>
+            <h1>Cat care tips</h1>
+            <h3>Guidelines About Cats That Are Very Easy To Understand</h3>
+            <p>  If you own a cat, then you realize that this animal is a part of your family. <br>  Since this is the case, you owe it to your feline friend to be a responsible owner and protect it from dangers like infections and parasites. They have needs that are different from dogs, and they should not be treated the same way. Read on for some of the best methods for keeping pests off your cats.</p>
+            <p>  Grooming is an essential part of your cat's care. A cat requires regularly brushing and combing. <br>  Doing it constantly can help you keep their coats clean. Doing this will also help alleviate hairballs and excessive shedding. Regularly grooming keeps cats looking well and keeps your home neater.</p>
+            <p>  Deter your cat from chewing on inappropriate things by using bitter apple. <br>  You can also cover your cords under a rug or tape them to walls. Bundle electrical cords together inside a tube. All thin cords should be put up when you're not using them.</p>
+            <p>  Have your cat chipped so you can find him if he runs away. One day, your indoor cat might leave through an open door or get outside through an open window. <br>  Even if you put a collar or tag on your cat, be careful as they can wiggle out of these very easily and can be dangerous if they get caught on a foreign object like a tree branch. <br>A microchip is tiny, similar in size to a single rice grain and capable of holding plenty of information. All shelters and vets have scanners to ensure your cat gets home safely.</p>
+            <a href="https://ndius.com/guidelines-about-cats-that-are-very-easy-to-understand/?gad_source=1&gclid=Cj0KCQjw2PSvBhDjARIsAKc2cgOg8uR1HdSuhy7odPqRWL2yVNp-wLQ_N4XCa_Xlp3bH-FQDrIclTqcaAnwtEALw_wcB"> Link for cat care tips</a>
+        </article>
+    </main>
+    <footer>
+        <p>© Adopt A Cat/Dog. All rights reserved.</p>
+        <a href="privacy.html">Privacy/Disclaimer Statement</a>
+    </footer>
+</body>
+</html>
